@@ -15,15 +15,21 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
     public Transform shootPoint;
     public GameObject bullet;
+    private static int gunTimer;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(shoot());
+        gunTimer = 0;
 	}
 
     // Update is called once per frame - before rendering
     void Update() {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Shoot();
+        }
+        gunTimer++;
 	}
 
     // Called before Physics updates
@@ -43,11 +49,12 @@ public class PlayerController : MonoBehaviour {
         );
     }
 
-    IEnumerator shoot()
+    void Shoot()
     {
-        while (true) { 
-            yield return new WaitForSeconds(0.25f);
+        if (gunTimer > 5)
+        {
             Instantiate(bullet, shootPoint.position, Quaternion.identity);
+            gunTimer = 0;
         }
     }
 }

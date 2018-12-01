@@ -33,7 +33,7 @@ public class Mover : MonoBehaviour {
 
         else if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
             Debug.Log("Lose GAME!");
         }
 
