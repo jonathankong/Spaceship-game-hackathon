@@ -2,29 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Simply moves the current game object
+/// </summary>
 public class EnemyScript : MonoBehaviour
 {
-    public Boundary boundary;
-    public Transform shootPoint;
-    public GameObject bullet;
+    // 1 - Designer variables
 
-    // Use this for initialization
-    void Start ()
+    /// <summary>
+    /// Object speed
+    /// </summary>
+    public Vector2 speed = new Vector2(10, 10);
+    public float frequency = 20f;
+    public float magnitude = 0.5f;
+
+    /// <summary>
+    /// Moving direction
+    /// </summary>
+    public Vector2 direction = new Vector2(-1, 0);
+
+    private Vector2 movement;
+    private Rigidbody2D rigidbodyComponent;
+
+    void Update()
     {
-        StartCoroutine(shoot());
-    }
-	
-	// Update is called once per frame
-	void Update () {
+        // 2 - Movement
+        movement = new Vector2(
+          speed.x * direction.x,
+          speed.y * direction.y + Mathf.Sin(Time.time * frequency) * magnitude);
+        transform.eulerAngles = new Vector3(0, 0, -Mathf.Sin(Time.time * frequency / 2) * 0.5f * 45);
 
     }
 
-    IEnumerator shoot()
+    void FixedUpdate()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.25f);
-            Instantiate(bullet, shootPoint.position, Quaternion.identity);
-        }
+        if (rigidbodyComponent == null) rigidbodyComponent = GetComponent<Rigidbody2D>();
+
+        // Apply movement to the rigidbody
+        rigidbodyComponent.velocity = movement;
     }
 }
