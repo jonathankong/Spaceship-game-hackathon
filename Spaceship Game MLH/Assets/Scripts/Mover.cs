@@ -6,6 +6,7 @@ public class Mover : MonoBehaviour {
     public Rigidbody2D rb;
     public float speed;
 
+  
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -17,6 +18,24 @@ public class Mover : MonoBehaviour {
 	void Update () {
 
         rb.velocity = transform.right * speed;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+
+            Destroy(collision.gameObject);
+
+        }
+
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Lose GAME!");
+        }
 
     }
 }
