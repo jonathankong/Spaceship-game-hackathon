@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour {
     // Called before Physics updates
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxisRaw("Horizontal") * 10;
+        float moveVertical = Input.GetAxisRaw("Vertical") * 10;
 
         Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
 
-        rb.AddForce(movement);
+        rb.velocity = movement;
     }
 }
